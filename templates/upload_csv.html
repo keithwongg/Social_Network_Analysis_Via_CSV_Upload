@@ -1,0 +1,258 @@
+<!-- Hide 2nd button forms for now because unsure of how data is to be combined -->
+
+{% load static %}
+{% load compress static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Social Network Model</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-graph.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-data-adapter.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-base.min.js" type="text/javascript"></script>
+  <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+  <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+  <!-- Alert User that Date Fields are in the wrong format. Check and re-upload -->
+  {% if wrong_format_value_error %}
+    <div class="alert alert-danger alert-dismissible mb-0" role="alert">
+      <h4 class="alert-heading">Wrong Format | Value Error</h4>
+      <hr>
+      <h5>Possible Errors:</h5>
+      <p>1. Date Fields ("Completed At") are in the wrong format. <br>
+        2. Basket $$ Fields ("Total Amount Spent") are in the wrong format. <br>
+        3. Number of columns/ Order of Columns does not match. 
+      </p>
+      <hr>
+      <p>1. Please ensure that all <strong>DATE</strong> fields are in the <strong>"YYYY-MM-DD"</strong> format and re-upload the CSV again.</p>
+      <p class="ml-3">
+        This is the same format as the other columns. Keep dates in the <strong>"YYYY-MM-DD"</strong> structure within each field.
+        Format is the same as 'orders_export.csv' from shopify orders export. 
+      </p>
+      <p>2. Please ensure that all <strong>BASKET</strong> fields are <strong>numbers and not alphabets, and are not empty</strong> and re-upload the CSV again.</p>
+      <p>3. Please ensure that <strong>Number and Order of Columns</strong>  are correct and re-upload the CSV again.</p>
+    </div>
+    <script>
+    $('.alert').alert();
+    </script>
+  {% endif %}
+  <!-- Alert User that Order Numbers are Missing. Fill fields with Order Number-->
+  {% if order_number_missing %}
+    <div class="alert alert-danger alert-dismissible mb-0" role="alert">
+      <h4 class="alert-heading">Order Number Missing</h4>
+      <hr>
+      <p>Some "Order Number" fields are missing. Please fill in the blank Order Numbers and re-upload them again.
+        If you have trouble finding the correct order number, mock numbers are allowed but they must be <strong>unique</strong> for this application to work as expected.
+      </p>
+    </div>
+    <script>
+    $('.alert').alert();
+    </script>
+  {% endif %}
+  <!-- Alert User that CSV is Empty-->
+  {% if csv_empty %}
+    <div class="alert alert-danger alert-dismissible mb-0" role="alert">
+      <h4 class="alert-heading">CSV No Data</h4>
+      <hr>
+      <p>There is no data in the uploaded CSV. Please upload a CSV with the relevant data and columns. <br>
+        Click the 'Sample CSV Dataset in Correct Upload Format' button below to 
+        download an example dataset to upload.
+      </p>
+    </div>
+    <script>
+    $('.alert').alert();
+    </script>
+  {% endif %}
+  
+
+
+
+
+  <div class="pageTitleDiv">
+    <div class="blackBox"></div>
+    <img src="{% static 'images/front_page.jpg' %}" alt="" class="frontPageImg">
+    <div class="pageTitleHeaderDiv">
+      <h1 class="pageTitleHeader">Display Social Network Model Via CSV Upload</h1>
+    </div>
+  </div>
+
+  <div class="whiteFill">
+    <div class="pageBodyDiv">
+      <div>
+        <h2>
+          Instructions
+        </h2>
+        <div class="col-lg-12 pl-0">
+          <p class="instructionsPara">
+            Upload CSV with the exact columns and formatting type in excel as shown in the table below. <br> <br>
+            <strong>Note:</strong> "Completed At" column is similar to 'orders_export.csv' where <strong>dates are in this format: "2020-01-01 20:46:10 +0800".</strong>
+            However, this web app only uses the first 10 characters, so as long as the dates are in the <strong>"YYYY-MM-DD"</strong> format, it is fine.
+            The web application will convert the string parsed into a datetime object inside the database. <br> <br>
+            First and Last name belongs to the Referrer and Friend's first and last name belongs to the Receiver/ User of the referral code.
+          </p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Columns</th>
+                <th>Example</th>
+                <th>Excel Formatting Type</th>
+                <th>Python Data Type</th>
+                <th>Blanks Allowed ?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>First Name</td>
+                <td>A</td>
+                <td>General</td>
+                <td>String</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Last Name</td>
+                <td>Wong</td>
+                <td>General</td>
+                <td>String</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>awong@aw.com</td>
+                <td>General</td>
+                <td>String</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Friend First Name</td>
+                <td>B</td>
+                <td>General</td>
+                <td>String</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Last Name</td>
+                <td>Tan</td>
+                <td>General</td>
+                <td>String</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Friend Email</td>
+                <td>btan@bt.com</td>
+                <td>General</td>
+                <td>String</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Completed At</td>
+                <td><strong>2020-01-01 20:46:10 +0800</strong></td>
+                <td>General</td>
+                <td>String</td>
+                <td>Yes, but will be replaced with python datetime.now()</td>
+              </tr>
+              <tr>
+                <td>State</td>
+                <td>Completed</td>
+                <td>General</td>
+                <td>String</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Total Amount Spent</td>
+                <td>88</td>
+                <td>General</td>
+                <td>String</td>
+                <td>Yes, but will be replaced with "0.00"</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br>
+        
+        <form action="{% static 'csv/example.csv' %}" class="inlineButtonStyling">
+          <button class="btn btn-secondary" type="submit">Sample CSV Dataset in Correct Upload Format</button> 
+        </form>
+        <form action="{% static 'pdf/SocialNetworkAnalytics_WebApp_Docs.pdf' %}" class="documentationButton">
+          <button class="btn btn-secondary" type="submit">Documentation/ Guide</button> 
+        </form>
+  
+        <!-- For First and Second CSV uploads. Just uncomment them out -->
+        <!-- <div class="col-lg-8 col-md-12 pl-0">
+          <p>
+            CSV can be uploaded directly after downloading it from Shopify Store Front "Orders Exports" and Smile.io "Referral Activity".
+            Click the buttons below to see example columns for CSV upload. Note: You can just upload the CSV directly after you have downloaded it
+            from the website. There should not be a need to edit it. 
+          </p>
+        </div> -->
+        <!-- First CSV Upload -->
+        <!-- <form action="{% static 'csv/referrals_export.csv' %}" style="display: inline-block;">
+          <button class="btn btn-secondary" type="submit">Second CSV Upload Example</button> 
+        </form> -->
+        <!-- Second CSV Upload -->
+        <!-- <form action="{% static 'csv/orders_export.csv' %}" style="display: inline-block; margin-right: 4rem;">
+          <button class="btn btn-secondary" type="submit">First CSV Upload Example</button> 
+        </form> -->
+      </div>
+      <br>
+      <div>
+        <h2 class="pageBodyTitle">{{ message }}</h2>
+        <form method="POST" enctype="multipart/form-data"> 
+            {% csrf_token %}
+            <div class="input-group mb-3 sm-12">
+              <div class="custom-file">
+                <!-- <input type="file" name="csv_file" required="True"> -->
+                <input type="file" class="custom-file-input sm-12 fileUploadWidth" id="inputGroupFile01" name="csv_file" required="True">
+                <label class="custom-file-label fileUploadWidth" for="name" aria-describedby="inputGroupFileAddon01">Choose CSV</label>
+              </div>
+            </div>
+            <!-- <div class="input-group mb-3">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile02" name="csv_file2" required="True">
+                <label class="custom-file-label" for="name" aria-describedby="inputGroupFileAddon02">Choose CSV</label>
+              </div>
+            </div> -->
+            <button class="btn btn-primary">Upload </button> 
+        </form>
+        <br>
+      </div>
+    </div>
+
+  </div>
+  
+  
+  <!-- <div id="container">
+    {% compress js %}
+        <script src="{% static 'js/graph.js' %}" type="text/javascript"></script>
+    {% endcompress %}
+  </div> -->
+
+  
+  <script>
+    $('#inputGroupFile01').on('change',function(){
+        //get the file name
+        var fileName = $(this).val();
+        fileName = fileName.slice(12, fileName.length);
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+    })
+    $('#inputGroupFile02').on('change',function(){
+        //get the file name
+        var fileName = $(this).val();
+        fileName = fileName.slice(12, fileName.length);
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+    })
+  </script>
+        
+</body>
+</html>
