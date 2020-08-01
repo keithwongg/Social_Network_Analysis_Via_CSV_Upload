@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A [SMU BIA](https://www.smubia.org/) X [Orca Active](https://orcaactive.com/) collaboration. Orca Active sells female athleisure clothing, and this project aims to aid them in identifying customers of great influence via Social Network Analytics. The influence of a customer can be split into Quantitative and Qualitative portions. Quantitative assessment involves numerical representations via metrics such as degree of centrality, eigenvector centrality and betweenness centrality. Qualitative assessment includes things such as personality, style, genuine communication with others without the intention to oversell, i.e. trustworthiness and likeability. 
+A [SMU BIA](https://www.smubia.org/) X [Orca Active](https://orcaactive.com/) project. Orca Active sells female athleisure clothing, and this project aims to aid them in identifying customers of great influence via Social Network Analytics. The influence of a customer can be split into Quantitative and Qualitative portions. Quantitative assessment involves numerical representations via metrics such as degree of centrality, eigenvector centrality and betweenness centrality. Qualitative assessment includes things such as personality, style, genuine communication with others without the intention to oversell, i.e. trustworthiness and likeability. 
 
 In this project, the focus will be mainly on the Quantitative portion with the use of a CSV upload by exporting out data from Orca Active's shopify storefront. Metrics Used: Degree of Centrality (# of connections for a node), Eigenvector Centrality (a more meaningful way to calculate centrality), Betweenness Centrality (to identify nodes that are strong connectors).
 
@@ -48,7 +48,7 @@ Back-End:
 Keith Wong Jun Hsien (Singapore Management University)
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgements
 
