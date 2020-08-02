@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('Order_Number', models.CharField(max_length=200)),
                 ('Completed_At', models.CharField(max_length=200, null=True)),
                 ('State', models.CharField(max_length=200)),
-                ('Total_Amount_Spent', models.DecimalField(decimal_places=2, max_digits=10000000)),
+                ('Total_Amount_Spent', models.DecimalField(decimal_places=2, max_digits=999)),
             ],
         ),
     ]
