@@ -1,7 +1,7 @@
 from django.shortcuts import render
 import csv, io, json, numpy, scipy, random, os
 from .models import Referral
-from networkanalysis.settings import BASE_DIR
+# from networkanalysis.settings import BASE_DIR
 import networkx as nx
 from itertools import islice
 from django.shortcuts import redirect
@@ -11,7 +11,7 @@ import json
 from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
 
-
+BASE_DIR =  os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 data_export_file_path = BASE_DIR+ '/networkanalysis/static/csv/data_export.csv'
 ## Reset CSV function is used in other request functions, so it will have to be placed in the Global scope.
 def reset_csv():
