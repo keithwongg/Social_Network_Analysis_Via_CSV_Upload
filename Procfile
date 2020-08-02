@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath networkanalysis.wsgi
+web: gunicorn networkanalysis.wsgi
