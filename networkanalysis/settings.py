@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['socialnetworkanalytics.heroku.com']
 
@@ -144,8 +144,6 @@ COMPRESS_JS_FILTERS = [
 # STATIC_ROOT = 'compressor.storage.CompressorFileStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, "networkanalysis/static")
 
-#  Add configuration for static files storage using whitenoise
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
