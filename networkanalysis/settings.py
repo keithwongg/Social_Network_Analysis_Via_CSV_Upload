@@ -191,4 +191,4 @@ DEBUG_PROPAGATE_EXCEPTIONS = True
 
 COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'social_network_analytics_csv_upload.storage.WhiteNoiseStaticFilesStorage'
