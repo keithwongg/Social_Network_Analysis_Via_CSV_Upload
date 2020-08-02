@@ -145,7 +145,7 @@ COMPRESS_JS_FILTERS = [
 STATIC_ROOT = os.path.join(BASE_DIR, "networkanalysis/static")
 
 #  Add configuration for static files storage using whitenoise
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
