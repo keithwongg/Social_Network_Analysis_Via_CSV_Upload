@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['socialnetworkanalytics.heroku.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -190,4 +191,4 @@ DEBUG_PROPAGATE_EXCEPTIONS = True
 
 COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
