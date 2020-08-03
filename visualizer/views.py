@@ -57,9 +57,11 @@ def upload_csv(request):
         Referral.objects.all().delete()
 
         data_set = csv_file.read().decode('UTF-8')
+        # length of dataset with headers but no data is 129. Dataset that is totally empty: length is 1. All reject and request re-upload
+        if len(data_set) < 130:
+            return render(request, 'upload_csv.html', {"wrong_format_value_error": False, "order_number_missing": False, "csv_empty": True})
         io_string = io.StringIO(data_set)
         next(io_string)
-
         ## To write data to Json within static/js
         data_in_json = {}
         data_in_json['nodes'] = []
@@ -74,7 +76,6 @@ def upload_csv(request):
         for column in csv.reader(io_string, delimiter=',', quotechar="|"):
             try:
                 model = Referral()
-
                 if len(column[6]) == 0:
                     return render(request, 'upload_csv.html', {"wrong_format_value_error": False, "order_number_missing": True, "csv_empty": False})
                 if len(column[7][:10]) == 0:
@@ -96,7 +97,8 @@ def upload_csv(request):
                 model.Total_Amount_Spent = float(column[9]) if len(column[9]) != 0 else '0.00'
                 model.save()
             # handle (ValueError, AttributeError, IndexError)
-            except:
+            except Exception as e:
+                print(e)
                 return render(request, 'upload_csv.html', {"wrong_format_value_error": True, "order_number_missing": False, "csv_empty": False})
 
         if date_empty and basket_empty:
@@ -236,8 +238,6 @@ def analytics(request):
         # print('data to cal')
         # print(data_to_calculate)
         # if no data: nodes and edges empty
-        if len(data_to_calculate['nodes']) == 0:
-            return render(request, 'upload_csv.html', {"wrong_format_value_error": False, "order_number_missing": False, "csv_empty": True})
 
         # Execute analytcis
         G_symmetric = nx.Graph()

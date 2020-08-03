@@ -19,7 +19,9 @@ Ensure that the following are installed via pip:
 ### Running this project
 Open terminal (make sure that the path is where you store the files -- Alternatively, if you use VSCode, just go to Terminal > New Terminal and a new terminal with the current path will be opened at the bottom of the screen.)
 
-Replace the 'SECRET_KEY' variable in settings.py with your own secret key, generated from either by [Django's get_random_secret_key() module](https://humberto.io/blog/tldr-generate-django-secret-key/), or [this website](https://djecrety.ir/). A secret key is generated every time a new django project is created.
+Change in settings.py:
+1. Replace the 'SECRET_KEY' variable in settings.py with your own secret key, generated from either by [Django's get_random_secret_key() module](https://humberto.io/blog/tldr-generate-django-secret-key/), or [this website](https://djecrety.ir/). A secret key is generated every time a new django project is created.
+2. Change DEBUG variable from False to True.
 
 Run:
 ```

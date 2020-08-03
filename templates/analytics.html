@@ -172,14 +172,12 @@
         <div class="col-md-12">
           <div class="analyticsHeader ">
             <h3 style="display: inline;">Data Export</h3>
-              <form style="display: inline;" action="{% static 'csv/data_export.csv' %}" method="GET">
-                <button class="btn btn-primary mb-3 ml-4" type="submit">Export</button>
-              </form>
+            <button class="btn btn-primary ml-4 mb-2" onclick="exportMainTableToCSV('data_export.csv');">Export</button>
           </div>
           <div class="pageBodyAnalytics">
             <!-- Data Export -->
             <div class="table-responsive">
-              <table class="table">
+              <table class="table" id="mainDataTable">
                 <thead class="thead-dark">
                   <tr id="dataExportHeaders">
                     <!-- Follow Model Headers -->
