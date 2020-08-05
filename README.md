@@ -54,5 +54,8 @@ Back-End:
 ## Authors
 Keith Wong Jun Hsien (Singapore Management University)
 
+## Acknowledgements
+Special thanks to Tammi Chng, Wa Thone from BIA, LiXuan Chansan and Xinyi Tan from Orca Active for overseeing this project, and letting me be a part of it.
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
